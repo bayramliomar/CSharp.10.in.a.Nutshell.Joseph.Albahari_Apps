@@ -1,5 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Text;
 using Test;
+using Test.Concrete;
 
 #region others
 //var a1 = new { A = 1, B = 2, C = 3, D = 4, E = 5 };
@@ -396,7 +398,52 @@ Console.WriteLine();
 //};
 #endregion
 #region Jagged arrays
-int[][] matrix = new int[3][];
+//int[][] matrix = new int[3][];
 //int[][] matrix2 = new int[][3];
+
+//int[] arr = new int[3];
+//arr[3] = 1; // IndexOutOfRangeException thrown
 #endregion
+#endregion
+
+#region Variables and Parameters
+
+#region Heap
+//StringBuilder ref1 = new StringBuilder("object1");
+//Console.WriteLine(ref1);
+//// The StringBuilder referenced by ref1 is now eligible for GC.
+//StringBuilder ref2 = new StringBuilder("object2");
+//StringBuilder ref3 = ref2;
+//// The StringBuilder referenced by ref2 is NOT yet eligible for GC.
+//Console.WriteLine(ref3); // object2
+#endregion
+
+#endregion
+
+#region Definite Assignment
+//int x;
+//Console.WriteLine(x); // Compile-time error
+
+//Test a=new Test();
+//Console.WriteLine(a.y);
+//class Test{
+//   public int y;
+//}
+
+//int[] ints = new int[2];
+//Console.WriteLine(ints[0]); // 0
+#endregion
+
+#region Question IChunkArray
+//ChunkArray<int> chunkArray = new ChunkArray<int>();
+//int[] x = new int[] { 1, 2 };
+//int[] y = new int[] { 3, 4, 5 };
+//chunkArray.Add(x);
+//chunkArray.Add(y);
+//Console.WriteLine(chunkArray.Length);
+
+//Console.WriteLine(chunkArray[0]);
+//chunkArray[0] = 7;
+//Console.WriteLine(chunkArray[0]);
+//Console.ReadLine();
 #endregion
