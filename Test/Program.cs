@@ -1,4 +1,7 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Drawing;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using Test;
 using Test.Concrete;
@@ -434,6 +437,126 @@ Console.WriteLine();
 //Console.WriteLine(ints[0]); // 0
 #endregion
 
+#region Parameters
+//Passing arguments by value
+//int x = 8;
+//Foo(x); // Make a copy of x
+//Console.WriteLine(x); // x will still be 8
+//static void Foo(int p)
+//{
+//    p = p + 1; // Increment p by 1
+//    Console.WriteLine(p); // Write p to screen
+//}
+/*------------------------------------------*/
+//StringBuilder sb = new StringBuilder();
+//Foo(sb);
+//Console.WriteLine(sb.ToString()); // test
+//static void Foo( StringBuilder  fooSB)
+//{
+//    fooSB.Append("test");
+//    fooSB = null;
+//    //Console.WriteLine(fooSB.ToString());
+//}
+#region Ref
+/*----------------------------------------------*/
+//int x = 8;
+//Foo2(ref x); // Ask Foo to deal directly with x
+//Console.WriteLine(x); // x is now 9
+//static void Foo2(ref int p)
+//{
+//    p = p + 1; // Increment p by 1
+//    Console.WriteLine(p); // Write p to screen
+//}
+/*----------------------------------------------*/
+//StringBuilder r_sb = new StringBuilder();
+//r_Foo(ref r_sb);
+////Console.WriteLine(r_sb.ToString()); // error
+//static void r_Foo(ref StringBuilder r_fooSB)
+//{
+//    r_fooSB.Append("test");
+//    r_fooSB = null;
+//    //Console.WriteLine(fooSB.ToString());
+//}
+/*----------------------------------------------*/
+//string x = "Penn";
+//string y = "Teller";
+//Swap(ref x, ref y);
+//Console.WriteLine(x); // Teller
+//Console.WriteLine(y); // Penn
+//static void Swap(ref string a, ref string b)
+//{
+//    string temp = a;
+//    a = b;
+//    b = temp;
+//}
+/*----------------------------------------------*/
+#endregion
+#region Out
+//string a, b;
+//string _;
+////Split("Stevie Ray Vaughn", out a, out b);
+//Split("Stevie Ray Vaughan", out string a, out string b);
+//Console.WriteLine(a); // Stevie Ray
+//Console.WriteLine(b); // Vaughn
+//Split("Stevie1 Ray1 Vaughan1", out string c, out _); // Discard 2nd param
+//Console.WriteLine(c);
+//Console.WriteLine(_);
+
+//void Split(string name, out string firstNames, out string lastName)
+//{
+//    int i = name.LastIndexOf(' ');
+//    firstNames = name.Substring(0, i);
+//    lastName = name.Substring(i + 1);
+//}
+
+//Test2.Main();
+//class Test2
+//{
+//    public static int x;
+//    public static void Main() { Foo3(out x); }
+//    public static void Foo3(out int y)
+//    {
+//        Console.WriteLine(x); // x is 0
+//        y = 1; // Mutate y
+//        Console.WriteLine(x); // x is 1
+//    }
+//}
+#endregion
+#region in
+
+
+//Method(5); // OK, temporary variable created.
+////Method(5L); // CS1503: no implicit conversion from long to int
+//short s = 0;
+//Method(s); // OK, temporary int created with the value 0
+////Method(in s); // CS1503: cannot convert from in short to in int
+//int i = 42;
+//Method(i); // passed by readonly reference
+//Method(in i); // passed by readonly reference, explicitly using `in`
+//static void Method(in int argument)
+//{
+//    Console.WriteLine(argument);
+//    // implementation removed
+//}
+#endregion
+#region params
+int total = Sum(1, 2, 3, 4);
+Console.WriteLine(total); // 10
+// The call to Sum above is equivalent to:
+int total2 = Sum(new int[] { 1, 2, 3, 4 });
+Console.WriteLine(total2); // 10
+int Sum(params int[] ints)
+{
+    int sum = 0;
+    for (int i = 0; i < ints.Length; i++)
+        sum += ints[i]; // Increase sum by ints[i]
+    return sum;
+}
+
+#endregion
+#endregion
+
+
 #region Question IChunkArray
 //ChunkArray<int> chunkArray = new ChunkArray<int>();
 //int[] x = new int[] { 1, 2 };
@@ -446,4 +569,24 @@ Console.WriteLine();
 //chunkArray[0] = 7;
 //Console.WriteLine(chunkArray[0]);
 //Console.ReadLine();
+#endregion
+
+#region SizeOfStruct
+//X x = new X();
+//int size = System.Runtime.InteropServices.Marshal.SizeOf(typeof(X));
+//Console.WriteLine(size);
+//struct X
+//{
+//    int c;
+//    int c1;
+//    int c2;
+//    long a;
+//}
+#endregion
+
+#region test
+//int a;
+//long b = long.MaxValue-1;
+//a = (int)b;
+//Console.WriteLine(a);
 #endregion
