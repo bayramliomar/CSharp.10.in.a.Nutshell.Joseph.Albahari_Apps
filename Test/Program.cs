@@ -1,10 +1,14 @@
-﻿using System.Diagnostics;
+﻿using example;
+using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using Test;
 using Test.Concrete;
+
+
+
 
 #region others
 //var a1 = new { A = 1, B = 2, C = 3, D = 4, E = 5 };
@@ -102,6 +106,7 @@ Console.WriteLine();
 
 #endregion
 
+#region CSharp.10.in.a.Nutshell.Joseph.Albahari
 #region Numeric suffixes
 //long i = 5;
 //double x = 4.0;
@@ -540,23 +545,87 @@ Console.WriteLine();
 //}
 #endregion
 #region params
-int total = Sum(1, 2, 3, 4);
-Console.WriteLine(total); // 10
-// The call to Sum above is equivalent to:
-int total2 = Sum(new int[] { 1, 2, 3, 4 });
-Console.WriteLine(total2); // 10
-int Sum(params int[] ints)
-{
-    int sum = 0;
-    for (int i = 0; i < ints.Length; i++)
-        sum += ints[i]; // Increase sum by ints[i]
-    return sum;
-}
+//int total = Sum(1, 2, 3, 4);
+//Console.WriteLine(total); // 10
+//// The call to Sum above is equivalent to:
+//int total2 = Sum(new int[] { 1, 2, 3, 4 });
+//Console.WriteLine(total2); // 10
+//int Sum(params int[] ints)
+//{
+//    int sum = 0;
+//    for (int i = 0; i < ints.Length; i++)
+//        sum += ints[i]; // Increase sum by ints[i]
+//    return sum;
+//}
 
 #endregion
+#region optional
+//Foo(78);
+//void Foo(int x = 23) { Console.WriteLine(x); }
+#endregion
+#region Named arguments
+//Foo(x: 1, y: 2); // 1, 2
+//Foo(y:9, x: 2);
+
+//Foo(x: 1, 2); // OK. Arguments in the declared positions
+//Foo(y: 2, 1); // Compile-time error. y isn't in the first position
+
+//Bar(d: 9);
+
+//void Bar(int a = 0, int b = 0, int c = 0, int d = 0) {  }
+//void Foo(int x, int y) { Console.WriteLine(x + ", " + y); }
+#endregion
+#region Ref Locals
+//int[] numbers = { 0, 1, 2, 3, 4 };
+//ref int numRef = ref numbers[2];
+//Console.WriteLine(numRef);
+//numRef = 190;
+//Console.WriteLine(numRef);
+//Console.WriteLine(numbers[2]);
+#endregion
+#region Ref Returns
+//ref string xRef = ref Program2.RefGetX(); // Assign result to a ref local
+//ref string propXRef = ref Program2.Prop; // Assign result to a ref local
+////string xRef2 = Program2.RefGetX();
+////string x = Program2.GetX(); // Assign result to a ref local
+//xRef = "New Value";
+////xRef2 = "New Value2";
+////x = "New Value2";
+//string localX = Program2.RefGetX(); // Legal: localX is an ordinary non-ref variable
+//Program2.Prop = "New Y Value";
+//Console.WriteLine(Program2.x); // New Value
+//Console.WriteLine(Program2.y); // New Value
+
+//public class Program2
+//{
+//    public static string x = "Old Value";
+//    public static string y = "Y Value";
+//    public static ref string Prop => ref y;
+//    public static ref string RefGetX() => ref x; // This method returns a ref
+//    public static string GetX() => x; // This method returns a ref
+//}
+#endregion
+#region Target-Typed new Expressions
+//Foo Foo = new Foo("ddsds");
+
+//class Foo
+//{
+//    System.Text.StringBuilder sb;
+
+//    public Foo(string initialValue)
+//    {
+//        sb = new(initialValue);
+//    }
+//}
 #endregion
 
 
+#endregion
+
+#endregion
+
+
+#region Others
 #region Question IChunkArray
 //ChunkArray<int> chunkArray = new ChunkArray<int>();
 //int[] x = new int[] { 1, 2 };
@@ -590,3 +659,96 @@ int Sum(params int[] ints)
 //a = (int)b;
 //Console.WriteLine(a);
 #endregion
+
+#region Covariance-Contravariance
+#region LinkedList Reverse
+//LinkedList list = new LinkedList();
+//list.AddNode(new LinkedList.Node(85));
+//list.AddNode(new LinkedList.Node(15));
+//list.AddNode(new LinkedList.Node(4));
+//list.AddNode(new LinkedList.Node(20));
+
+//// List before reversal
+//Console.WriteLine("Given linked list ");
+//list.PrintList();
+
+//// Reverse the list
+//list.ReverseList();
+
+// List after reversal
+//Console.WriteLine("Reversed linked list ");
+//list.PrintList();
+#endregion
+#region example namespace
+namespace example
+{
+    // C# program for reversing the linked list
+
+    class LinkedList
+    {
+        Node head;
+
+        public class Node
+        {
+            public int data;
+            public Node next;
+
+            public Node(int d)
+            {
+                data = d;
+                next = null;
+            }
+        }
+
+        // function to add a new node at
+        // the end of the list
+        public void AddNode(Node node)
+        {
+            if (head == null)
+                head = node;
+            else
+            {
+                Node temp = head;
+                while (temp.next != null)
+                {
+                    temp = temp.next;
+                }
+                temp.next = node;
+            }
+        }
+
+        // function to reverse the list
+        public void ReverseList()
+        {
+            Node prev = null, current = head, next = null;
+            while (current != null)
+            {
+                next = current.next;
+                current.next = prev;
+                prev = current;
+                current = next;
+            }
+            head = prev;
+        }
+
+        // function to print the list data
+        public void PrintList()
+        {
+            Node current = head;
+            while (current != null)
+            {
+                Console.Write(current.data + " ");
+                current = current.next;
+            }
+            Console.WriteLine();
+        }
+    }
+
+    // This code is contributed by Mayank Sharma
+
+}
+#endregion
+#endregion
+
+#endregion
+
